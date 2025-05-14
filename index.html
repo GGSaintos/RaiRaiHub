@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rachel's iPod</title>
+  <style>
+    body {
+      background-color: #fff7c9;
+      font-family: monospace;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      font-size: 30px;
+      margin-top: 30px;
+    }
+
+    .ipod-container {
+      position: relative;
+      width: 500px;
+      margin: 0 auto;
+    }
+
+
+    .ipod {
+      width: 100%;
+      image-rendering: pixelated;
+      display: block;
+    }
+
+    #album-cover {
+        position: absolute;
+        top: 58px;
+        left: 58px;
+        translate: 32.5% 16.5%;
+        width: 245px;
+        height: 165px;
+        object-fit: cover;
+        pointer-events: none;
+        }
+
+    .controls {
+      margin-top: 30px;
+    }
+
+    .nav-button {
+      font-size: 16px;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .next-visible-button {
+      font-size: 18px;
+      padding: 12px 24px;
+      background-color:transparent;
+      color:transparent;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      position: relative;
+      top: -435px;
+      left: 75px;
+      width: 60px;
+      height: 50px;
+      transition: background-color 0.3s ease;
+    }
+
+    .back-visible-button {
+      font-size: 18px;
+      padding: 12px 24px;
+      background-color:transparent;
+      color: transparent;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      position: relative;
+      top: -510px;
+      left: -55px;
+      height: 40px;
+      width: 60px;
+      transition: background-color 0.3s ease;
+    }
+
+    .play-song-button {
+      font-size: 18px;
+      padding: 2px;
+      background-color:transparent;
+      color: transparent;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      position: relative;
+      height: 40px;
+      width: 100px;
+      top: -550px;
+      left: 10px;
+      transition: background-color 0.3s;
+    }
+
+    .play-song-button:hover {
+      background-color: transparent;
+    }
+
+    .screen-button {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: none;
+      z-index: 10;
+      cursor: pointer;
+    }
+
+    #message-container {
+        margin-top: -200px;
+        text-align: center;
+    }
+
+    #message-img {
+        max-width: 40%;
+        height: auto;
+        image-rendering: pixelated;
+        margin: 0 auto;
+        display: block;
+    }
+
+    .menu-button {
+      position: relative;
+      top: -675px; 
+      left: 7px;
+      padding: 10px 20px;
+      background-color: transparent;
+      color: transparent;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    /* Popup styles */
+.popup-overlay {
+  display: none; /* hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content iframe {
+  width: 100%;
+  height: 600px;
+  border: none;
+}
+
+#popup-message-img {
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+.close-button {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: red;
+  color: white;
+  border: none;
+  font-size: 16px;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+
+    #playPauseBtn { left: 705px; top: 630px; }
+    #nextBtn      { left: 768px; top: 581px; }
+    #prevBtn      { left: 631px; top: 581px; }
+
+  </style>
+</head>
+<body>
+
+  <h1>  </h1>
+
+  <div class="ipod-container">
+    <img src="ipods.png" alt="Pixel iPod" class="ipod">
+    <img id="album-cover" src="">
+  </div>
+  <br>
+  <br>
+  <div>
+    Dear Rai Rai,
+  <br>
+    Thank you for being the best friend that I'd want for eternity.
+  <br>
+    While we're apart from each other, I made you a playlist of songs 
+  <br> 
+    that reminded me of our memories. 
+  <br>
+    I told you I'd show you my demos when you comeback
+  <br>
+    but I wanted to give you one special present 
+  <br>
+    before you head to the Philippines.
+  <br>
+    at the end of this playlist I released my demo before you leave.
+  <br>
+    I love you so much and I can't express it enough through words < 3
+  <br>
+  Love,
+  <br>
+  The Phil Dunphy to your Claire 
+  <br>
+  Gilir 
+ 
+
+    
+  </div>
+
+  <button class="screen-button" id="playPauseBtn" onclick="togglePlay()"></button>
+  <button class="screen-button" id="nextBtn" onclick="nextTrack()"></button>
+  <button class="screen-button" id="prevBtn" onclick="prevTrack()"></button>
+
+  <div class="controls">
+    <audio id="audio-player" style="display:none;"></audio>
+  </div>
+
+  <div class="controls">
+  <button class="next-visible-button" onclick="nextTrack()">Next ▶️</button>
+  <audio id="audio-player" style="display:none;"></audio>
+  </div>
+
+  <div class="controls">
+  <button class="back-visible-button" onclick="prevTrack()">Back ⏪</button>
+  <audio id="audio-player" style="display:none;"></audio>
+  </div>
+
+  <div class="controls">
+  <button class="play-song-button" onclick="playCurrentSong()">▶️ Play Song</button>
+  <audio id="audio-player" style="display:none;"></audio>
+  </div>
+
+  <!-- <div id="message-container">
+  <img id="message-img" src="" alt="Message Image">
+  </div> -->
+
+
+
+  <button class="menu-button" onclick="openMenu()">MENU</button>
+  
+  <div id="message-popup" class="popup-overlay">
+  <div class="popup-content">
+    <button class="close-button" onclick="closeMenu()">✖</button>
+    <div id="popup-message-content"></div>
+  </div>
+  </div>
+
+
+
+  <script>
+    const maxIndex = 10;
+    let trackList = Array.from({ length: maxIndex }, (_, i) => i + 1);
+
+
+    let currentShuffledIndex = 0;
+
+    const album = document.getElementById('album-cover');
+    const audio = document.getElementById('audio-player');
+
+    function playCurrentSong(){
+        if(!audio.src) return;
+        const btn = document.querySelector('.play-song-button');
+    
+        if(audio.paused){
+            audio.play();
+            btn.textContent = '⏸Pause Song';
+        } else {
+            audio.pause();
+            btn.textContent = 'Play Song';
+        }
+    }
+
+    function pauseCurrentSong(){
+        if(!audio.src) return;
+        audio.pause();
+    }
+
+    function loadTrack(index) {
+      const trackNum = trackList[index];
+      album.src = `Photos/${trackNum}.png`;
+      audio.src = `Songs/${trackNum}.wav`;
+        audio.oncanplaythrough = () => {
+    audio.play();
+    };
+      audio.load();
+    }
+
+    function nextTrack() {
+      currentShuffledIndex++;
+      if (currentShuffledIndex >= trackList.length) currentShuffledIndex = 0;
+      loadTrack(currentShuffledIndex);
+      audio.play();
+    }
+
+    function prevTrack() {
+      currentShuffledIndex--;
+      if (currentShuffledIndex < 0) currentShuffledIndex = trackList.length - 1;
+      loadTrack(currentShuffledIndex);
+      audio.play();
+    }
+
+    function togglePlay() {
+      if (!audio.src) return;
+      audio.paused ? audio.play() : audio.pause();
+    }
+
+function openMenu() {
+    const trackNum = trackList[currentShuffledIndex];
+    const popup = document.getElementById('message-popup');
+    const content = document.getElementById('popup-message-content');
+
+    if (trackNum === 10) {
+        // Show PDF
+        content.innerHTML = `
+            <iframe src="Message/10.pdf" style="width: 100%; height: 100%; border: none;"></iframe>
+        `;
+    } else {
+        // Show image
+        content.innerHTML = `
+            <img src="Message/${trackNum}.png" id="popup-message-img" alt="Message Image">
+        `;
+    }
+
+    popup.style.display = 'flex';
+}
+
+    function closeMenu() {
+        const popup = document.getElementById('message-popup');
+        popup.style.display = 'none';
+    }
+
+    window.onload = () => loadTrack(currentShuffledIndex);
+  </script>
+
+</body>
+</html>
